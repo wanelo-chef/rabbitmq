@@ -1,0 +1,29 @@
+---
+driver_config:
+  joyent_username: <%= ENV['SDC_ACCOUNT'] %>
+  joyent_keyfile: <%= ENV['SDC_IDENTITY'] %>
+  joyent_keyname: <%= ENV['SDC_KEY_ID'] %>
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: true
+
+platforms:
+- name: smartos-base64-1410
+  driver_plugin: joyent
+  driver_config:
+    joyent_url: "https://us-east-1.api.joyentcloud.com/"
+    joyent_image_id: 8639203c-d515-11e3-9571-5bf3a74f354f
+    joyent_flavor_id: g3-standard-15-smartos
+    username: root
+    ssh_key: <%= ENV['SDC_IDENTITY'] %>
+  provisioner:
+    name: chef_zero
+    sudo: false
+    chef_omnibus_url: https://raw.github.com/wanelo-chef/chef-bootstrap/master/latest.sh
+    # chef_omnibus_url: https://raw.github.com/test-kitchen/kitchen-joyent/master/scripts/install-smartos.sh
+
+suites:
+- name: source
+  run_list:
+    - recipe[rabbitmq::source]
