@@ -6,6 +6,15 @@ module RabbitMQ
       @node = node
     end
 
+    def build_environment
+      {'CFLAGS' => '-O2 -pipe -O2 -I/usr/include -I/opt/local/include -I/opt/local/include/gettext',
+       'LDFLAGS' => '-L/opt/local/gcc47/lib -Wl,-R/opt/local/gcc47/lib -L/usr/lib/amd64 -Wl,-R/usr/lib/amd64 -L/opt/local/lib -Wl,-R/opt/local/lib',
+       'TARGET_DIR' => "/opt/local/lib/erlang/lib/rabbitmq_server-#{version}",
+       'SBIN_DIR' => '/opt/local/sbin/',
+       'MAN_DIR' => '/opt/local/man',
+       'MANPREFIX' => '/opt/local'}
+    end
+
     def source_directory
       [Chef::Config['file_cache_path'], "rabbitmq-server-#{version}"].join('/')
     end

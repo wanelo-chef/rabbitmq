@@ -7,10 +7,13 @@ remote_file helper.tar_file do
 end
 
 execute 'untar rabbitmq' do
-  command %[tar xvzf #{helper.tar_file} #{helper.source_directory}]
+  command %[tar xvzf #{helper.tar_file}]
+  cwd File.dirname(helper.tar_file)
+  not_if { File.directory?(helper.source_directory) }
 end
 
-execute 'configure rabbitmq' do
-  command %{./configure}
+execute 'make rabbitmq' do
+  command %{make}
   cwd helper.source_directory
+  environment helper.build_environment
 end

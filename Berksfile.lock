@@ -4,12 +4,21 @@
       "path": "."
     },
     "erlang": {
-      "locked_version": "2000.1.0",
+      "locked_version": "2000.2.0",
       "git": "git://github.com/wanelo-chef/erlang.git",
-      "ref": "1e88e6f4b84d35ed9ca17e3ba6a1bff066456b67"
+      "ref": "c2f43fea76920786177fc539cadb2003c3f31c3c"
     },
     "build-essential": {
       "locked_version": "1.4.2"
+    },
+    "python": {
+      "locked_version": "1.4.6"
+    },
+    "yum-epel": {
+      "locked_version": "0.3.6"
+    },
+    "yum": {
+      "locked_version": "3.2.0"
     }
   }
 }
