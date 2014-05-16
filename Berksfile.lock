@@ -8,6 +8,9 @@
       "git": "git://github.com/wanelo-chef/erlang.git",
       "ref": "c2f43fea76920786177fc539cadb2003c3f31c3c"
     },
+    "rabbitmq_test": {
+      "path": "./test/cookbooks/rabbitmq_test"
+    },
     "build-essential": {
       "locked_version": "1.4.2"
     },

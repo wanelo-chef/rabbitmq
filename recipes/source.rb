@@ -1,6 +1,6 @@
 include_recipe 'rabbitmq::dependencies'
 
-helper = RabbitMQ::Helper.new(node)
+helper = RabbitMQ::SourceHelper.new(node)
 
 remote_file helper.tar_file do
   source helper.remote_tar_file

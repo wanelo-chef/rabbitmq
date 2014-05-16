@@ -30,3 +30,8 @@ suites:
 - name: package
   run_list:
     - recipe[rabbitmq::package]
+- name: user
+  run_list:
+    - recipe[rabbitmq::package]
+    - recipe[rabbitmq_test::rabbitmq_user]
+

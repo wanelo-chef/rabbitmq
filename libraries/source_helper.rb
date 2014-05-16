@@ -1,5 +1,5 @@
 module RabbitMQ
-  class Helper
+  class SourceHelper
     attr_reader :node
 
     def initialize(node)
