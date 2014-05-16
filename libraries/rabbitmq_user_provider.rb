@@ -10,10 +10,13 @@ class Chef
       end
 
       def action_create
-        cmd = "rabbitmqctl add_user #{new_resource.name} '#{new_resource.password}'"
-        execute "creating rabbitmq user #{new_resource.name}" do
-          command %{su - rabbitmq -c "#{cmd}"}
-          Chef::Log.info "Adding RabbitMQ user '#{new_resource.name}'."
+        if new_resource.exists?
+        else
+          cmd = "rabbitmqctl add_user #{new_resource.name} '#{new_resource.password}'"
+          execute "creating rabbitmq user #{new_resource.name}" do
+            command %{su - rabbitmq -c "#{cmd}"}
+            Chef::Log.info "Adding RabbitMQ user '#{new_resource.name}'."
+          end
         end
       end
     end
