@@ -12,6 +12,12 @@ execute 'untar rabbitmq' do
   not_if { File.directory?(helper.source_directory) }
 end
 
+execute 'patch rabbitmq source' do
+  command %{find . -type f | xargs sed -i 's^#!\/bin\/sh^#!\/usr\/xpg4\/bin\/sh^'}
+  cwd helper.source_directory
+  only_if { helper.requires_sh_patching? }
+end
+
 execute 'make rabbitmq' do
   command %{make}
   cwd helper.source_directory

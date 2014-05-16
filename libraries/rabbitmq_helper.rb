@@ -12,7 +12,9 @@ module RabbitMQ
        'TARGET_DIR' => "/opt/local/lib/erlang/lib/rabbitmq_server-#{version}",
        'SBIN_DIR' => '/opt/local/sbin/',
        'MAN_DIR' => '/opt/local/man',
-       'MANPREFIX' => '/opt/local'}
+       'MANPREFIX' => '/opt/local',
+       'PATH' => '/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin'
+      }
     end
 
     def source_directory
@@ -37,6 +39,10 @@ module RabbitMQ
 
     def mirror
       config['mirror']
+    end
+
+    def requires_sh_patching?
+      %w(smartos solaris2).include?(node['platform'])
     end
 
     private
