@@ -27,3 +27,6 @@ suites:
 - name: source
   run_list:
     - recipe[rabbitmq::source]
+- name: package
+  run_list:
+    - recipe[rabbitmq::package]
