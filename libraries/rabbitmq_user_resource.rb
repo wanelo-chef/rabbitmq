@@ -1,30 +1,35 @@
 require 'chef/resource'
 
-class Chef
-  class Resource
-    class RabbitmqUser < Chef::Resource
-      include Chef::Mixin::ShellOut
+class Chef::Resource::RabbitmqUser < Chef::Resource
+  include Chef::Mixin::ShellOut
 
-      def initialize(name, run_context=nil)
-        super
-        @resource_name = :rabbimq_user
-        @provider = Chef::Provider::RabbitmqUser
-        @action = :create
-        @allowed_actions = [:create]
-      end
+  def initialize(name, run_context=nil)
+    super
+    @resource_name = :rabbitmq_user
+    @provider = Chef::Provider::RabbitmqUser
+    @action = :create
+    @allowed_actions = [:create]
+  end
 
-      def name(arg=nil)
-        set_or_return(:name, arg, kind_of: String)
-      end
+  def name(arg=nil)
+    set_or_return(:name, arg, kind_of: String)
+  end
 
-      def password(arg=nil)
-        set_or_return(:password, arg, kind_of: String)
-      end
+  def password(arg=nil)
+    set_or_return(:password, arg, kind_of: String)
+  end
 
-      def exists?
-        cmd = shell_out!("su - rabbitmq -c 'rabbitmqctl list_users | grep #{name}'", valid_exit_codes: [0, 1])
-        cmd.status == 0
-      end
-    end
+  def vhost(arg=nil)
+    set_or_return(:vhost, arg, kind_of: String)
+  end
+
+  def permissions(arg=nil)
+    set_or_return(:permissions, arg, kind_of: String)
+  end
+
+  def exists?
+    Chef::Log.info "Checking for existence of RabbitMQ user #{name}"
+    cmd = RabbitMQ.ctl("list_users | grep #{name}", returns: [0, 1])
+    cmd.status == 0
   end
 end
