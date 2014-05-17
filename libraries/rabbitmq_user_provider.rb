@@ -8,12 +8,29 @@ class Chef::Provider::RabbitmqUser < Chef::Provider
   end
 
   def action_create
-    unless new_resource.exists?
-      cmd = "rabbitmqctl add_user #{new_resource.name} '#{new_resource.password}'"
-      execute "creating rabbitmq user #{new_resource.name}" do
-        command %{su - rabbitmq -c "#{cmd}"}
-        Chef::Log.info "Adding RabbitMQ user '#{new_resource.name}'."
-      end
-    end
+    create_user
+    set_permissions
+  end
+
+  private
+
+  def create_user
+    return if user.exists?
+
+    cmd = "rabbitmqctl add_user #{user.name} '#{user.password}'"
+    Chef::Log.info "Adding RabbitMQ user '#{user.name}'."
+    RabbitMQ.ctl cmd
+  end
+
+  def set_permissions
+    return if user.permissions_set?
+
+    cmd = "rabbitmqctl set_permissions -p #{user.vhost} #{user.name} #{user.permissions}"
+    Chef::Log.info "Adding RabbitMQ user '#{user.name}'."
+    RabbitMQ.ctl cmd
+  end
+
+  def user
+    new_resource
   end
 end

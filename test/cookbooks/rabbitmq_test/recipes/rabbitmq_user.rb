@@ -18,3 +18,9 @@ rabbitmq_user 'preexisting_user' do
   password 'password'
 end
 
+rabbitmq_user 'user_with_permissions' do
+  password 'password'
+  vhost '/thing'
+  permissions '.* .* .*'
+end
+

@@ -32,4 +32,11 @@ class Chef::Resource::RabbitmqUser < Chef::Resource
     cmd = RabbitMQ.ctl("list_users | grep #{name}", returns: [0, 1])
     cmd.status == 0
   end
+
+  def permissions_set?
+    return true unless vhost
+    return true unless permissions
+    perms = RabbitMQ.ctl("list_permissions -p #{vhost} | grep #{name}").stdout
+    perms == "#{name} #{permissions}"
+  end
 end
