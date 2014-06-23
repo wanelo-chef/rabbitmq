@@ -1,8 +1,8 @@
 source "https://rubygems.org"
 
 gem 'pry-nav'
-gem 'berkshelf', '~> 2.0'
-gem 'chefspec', '~> 3.0'
+gem 'berkshelf'
+gem 'chefspec'
 gem 'rubocop'
 
 group :integration do

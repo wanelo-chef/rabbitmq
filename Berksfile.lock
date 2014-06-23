@@ -1,27 +1,25 @@
-{
-  "sources": {
-    "rabbitmq": {
-      "path": "."
-    },
-    "erlang": {
-      "locked_version": "2000.2.0",
-      "git": "git://github.com/wanelo-chef/erlang.git",
-      "ref": "c2f43fea76920786177fc539cadb2003c3f31c3c"
-    },
-    "rabbitmq_test": {
-      "path": "./test/cookbooks/rabbitmq_test"
-    },
-    "build-essential": {
-      "locked_version": "1.4.2"
-    },
-    "python": {
-      "locked_version": "1.4.6"
-    },
-    "yum-epel": {
-      "locked_version": "0.3.6"
-    },
-    "yum": {
-      "locked_version": "3.2.0"
-    }
-  }
-}
+DEPENDENCIES
+  erlang
+    git: git://github.com/wanelo-chef/erlang.git
+    revision: c2f43fea76920786177fc539cadb2003c3f31c3c
+  rabbitmq
+    path: .
+    metadata: true
+  rabbitmq_test
+    path: test/cookbooks/rabbitmq_test
+
+GRAPH
+  build-essential (2.0.4)
+  erlang (2000.2.0)
+  python (1.4.6)
+    build-essential (>= 0.0.0)
+    yum-epel (>= 0.0.0)
+  rabbitmq (0.1.0)
+    build-essential (>= 0.0.0)
+    erlang (>= 0.0.0)
+    python (>= 0.0.0)
+  rabbitmq_test (1.0.0)
+    rabbitmq (>= 0.0.0)
+  yum (3.2.2)
+  yum-epel (0.3.6)
+    yum (~> 3.0)
