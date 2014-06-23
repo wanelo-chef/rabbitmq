@@ -13,7 +13,8 @@ module RabbitMQ
        'SBIN_DIR' => '/opt/local/sbin/',
        'MAN_DIR' => '/opt/local/man',
        'MANPREFIX' => '/opt/local',
-       'PATH' => '/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin'
+       'PATH' => '/usr/local/sbin:/usr/local/bin:/opt/local/sbin:/opt/local/bin:/usr/sbin:/usr/bin:/sbin',
+       'PYTHONHOME' => '/opt/local/lib'
       }
     end
 
