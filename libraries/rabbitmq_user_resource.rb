@@ -27,6 +27,12 @@ class Chef::Resource::RabbitmqUser < Chef::Resource
     set_or_return(:permissions, arg, kind_of: String)
   end
 
+  def command_line_permissions
+    unless permissions.nil? || permissions.empty?
+      permissions.split.map { |p| %{"#{p}"} }.join " "
+    end
+  end
+
   def exists?
     Chef::Log.info "Checking for existence of RabbitMQ user #{name}"
     cmd = RabbitMQ.ctl("list_users | grep #{name}", returns: [0, 1])
@@ -36,7 +42,7 @@ class Chef::Resource::RabbitmqUser < Chef::Resource
   def permissions_set?
     return true unless vhost
     return true unless permissions
-    perms = RabbitMQ.ctl("list_permissions -p #{vhost} | grep #{name}").stdout
+    perms = RabbitMQ.ctl("list_permissions -p #{vhost} | grep #{name}", returns: [0, 1]).stdout
     perms == "#{name} #{permissions}"
   end
 end

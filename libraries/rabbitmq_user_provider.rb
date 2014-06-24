@@ -17,17 +17,15 @@ class Chef::Provider::RabbitmqUser < Chef::Provider
   def create_user
     return if user.exists?
 
-    cmd = "add_user #{user.name} '#{user.password}'"
     Chef::Log.info "Adding RabbitMQ user '#{user.name}'."
-    RabbitMQ.ctl cmd
+    RabbitMQ.ctl "add_user #{user.name} '#{user.password}'"
   end
 
   def set_permissions
     return if user.permissions_set?
 
-    cmd = "set_permissions -p #{user.vhost} #{user.name} #{user.permissions}"
     Chef::Log.info "Adding RabbitMQ user '#{user.name}'."
-    RabbitMQ.ctl cmd
+    RabbitMQ.ctl %Q{set_permissions -p #{user.vhost} "#{user.name}" #{user.command_line_permissions}}
   end
 
   def user
