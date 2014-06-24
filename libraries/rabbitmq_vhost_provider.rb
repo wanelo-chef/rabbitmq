@@ -7,11 +7,8 @@ class Chef::Provider::RabbitmqVhost < Chef::Provider
 
   def action_create
     unless new_resource.exists?
-      cmd = "rabbitmqctl add_vhost /#{new_resource.name}"
-      execute "creating rabbitmq vhost #{new_resource.name}" do
-        command %{su - rabbitmq -c "#{cmd}"}
-        Chef::Log.info "Adding RabbitMQ vhost '#{new_resource.name}'."
-      end
+      Chef::Log.info "Adding RabbitMQ vhost '#{new_resource.name}'."
+      RabbitMQ.ctl "add_vhost /#{new_resource.name}"
     end
   end
 end
