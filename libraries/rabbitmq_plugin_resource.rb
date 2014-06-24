@@ -1,5 +1,4 @@
 require 'chef/resource'
-require 'rabbitmq_plugin_provider'
 
 class Chef::Resource::RabbitmqPlugin < Chef::Resource
   include Chef::Mixin::ShellOut
@@ -17,6 +16,6 @@ class Chef::Resource::RabbitmqPlugin < Chef::Resource
   end
 
   def enabled?
-    !!RabbitMQ.plugins("list -e #{name}").match(/ #{name} /)
+    !!RabbitMQ.plugins("list -e #{name}").stdout.match(/ #{name} /)
   end
 end
