@@ -14,7 +14,7 @@ GRAPH
   python (1.4.6)
     build-essential (>= 0.0.0)
     yum-epel (>= 0.0.0)
-  rabbitmq (0.1.0)
+  rabbitmq (0.2.0)
     build-essential (>= 0.0.0)
     erlang (>= 0.0.0)
     python (>= 0.0.0)
