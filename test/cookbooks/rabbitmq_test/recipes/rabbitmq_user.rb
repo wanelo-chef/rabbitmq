@@ -23,4 +23,3 @@ rabbitmq_user 'user_with_permissions' do
   vhost '/thing'
   permissions '.* .* .*'
 end
-
