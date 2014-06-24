@@ -5,4 +5,11 @@ module RabbitMQ
     cmd.error!
     cmd
   end
+
+  def self.plugins(cmd, options = {})
+    cmd = Mixlib::ShellOut.new("rabbitmq-plugins #{cmd}", options)
+    cmd.run_command
+    cmd.error!
+    cmd
+  end
 end

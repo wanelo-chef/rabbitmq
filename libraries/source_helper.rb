@@ -1,11 +1,5 @@
 module RabbitMQ
-  class SourceHelper
-    attr_reader :node
-
-    def initialize(node)
-      @node = node
-    end
-
+  class SourceHelper < Struct.new(:node)
     def build_environment
       {'CFLAGS' => '-O2 -pipe -O2 -I/usr/include -I/opt/local/include -I/opt/local/include/gettext',
        'LDFLAGS' => '-L/opt/local/gcc47/lib -Wl,-R/opt/local/gcc47/lib -L/usr/lib/amd64 -Wl,-R/usr/lib/amd64 -L/opt/local/lib -Wl,-R/opt/local/lib',
