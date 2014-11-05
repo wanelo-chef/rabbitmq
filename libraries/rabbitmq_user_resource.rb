@@ -49,4 +49,9 @@ class Chef::Resource::RabbitmqUser < Chef::Resource
     perms = RabbitMQ.ctl("list_permissions -p #{vhost} | grep #{name}", returns: [0, 1]).stdout
     perms == "#{name} #{permissions}"
   end
+
+  def tags_set?
+    existing_tags = RabbitMQ.ctl("list_users | egrep '^#{name} '", returns: [0, 1]).stdout
+    tags.join(' ') == existing_tags.match(/\[([^\]]*)\]/)[1]
+  end
 end

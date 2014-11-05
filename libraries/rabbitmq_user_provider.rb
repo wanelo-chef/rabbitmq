@@ -20,6 +20,7 @@ class Chef::Provider::RabbitmqUser < Chef::Provider
 
     Chef::Log.info "Adding RabbitMQ user '#{user.name}'."
     RabbitMQ.ctl "add_user #{user.name} '#{user.password}'"
+    user.updated_by_last_action(true)
   end
 
   def set_permissions
@@ -27,13 +28,15 @@ class Chef::Provider::RabbitmqUser < Chef::Provider
 
     Chef::Log.info "Adding RabbitMQ user permissions '#{user.name}', #{user.command_line_permissions}, vhost=#{user.vhost}"
     RabbitMQ.ctl %Q{set_permissions -p #{user.vhost} "#{user.name}" #{user.command_line_permissions}}
+    user.updated_by_last_action(true)
   end
 
   def set_tags
-    return if user.tags.empty?
+    return if user.tags.empty? || user.tags_set?
 
     Chef::Log.info "Setting user tags '#{user.name}'."
     RabbitMQ.ctl %Q{set_user_tags #{user.name} #{user.tags.join(' ')}}
+    user.updated_by_last_action(true)
   end
 
   def user
