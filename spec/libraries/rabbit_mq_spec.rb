@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'ctl_helper'
+require 'rabbit_mq'
 
 describe RabbitMQ do
   let(:shellout) { double(run_command: true, error!: true) }
@@ -21,6 +21,14 @@ describe RabbitMQ do
       cmd = 'stuff with things'
       RabbitMQ.plugins(cmd)
       expect(Mixlib::ShellOut).to have_received(:new).with("rabbitmq-plugins #{cmd}", {})
+    end
+  end
+
+  describe '::admin' do
+    it 'shells out to rabbitmqadmin' do
+      cmd = 'check some stuff'
+      RabbitMQ.admin(cmd)
+      expect(Mixlib::ShellOut).to have_received(:new).with("rabbitmqadmin #{cmd}", {})
     end
   end
 end

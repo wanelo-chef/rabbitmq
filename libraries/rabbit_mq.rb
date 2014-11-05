@@ -12,4 +12,11 @@ module RabbitMQ
     cmd.error!
     cmd
   end
+
+  def self.admin(cmd, options = {})
+    cmd = Mixlib::ShellOut.new("rabbitmqadmin #{cmd}", options)
+    cmd.run_command
+    cmd.error!
+    cmd
+  end
 end
