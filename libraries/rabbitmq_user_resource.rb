@@ -27,6 +27,10 @@ class Chef::Resource::RabbitmqUser < Chef::Resource
     set_or_return(:permissions, arg, kind_of: String)
   end
 
+  def tags(arg=nil)
+    set_or_return(:tags, arg, kind_of: Array, default: [])
+  end
+
   def command_line_permissions
     unless permissions.nil? || permissions.empty?
       permissions.split.map { |p| %{"#{p}"} }.join " "
@@ -35,7 +39,7 @@ class Chef::Resource::RabbitmqUser < Chef::Resource
 
   def exists?
     Chef::Log.info "Checking for existence of RabbitMQ user #{name}"
-    cmd = RabbitMQ.ctl("list_users | grep #{name}", returns: [0, 1])
+    cmd = RabbitMQ.ctl("list_users | egrep '^#{name} '", returns: [0, 1])
     cmd.status == 0
   end
 

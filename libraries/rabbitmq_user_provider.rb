@@ -10,6 +10,7 @@ class Chef::Provider::RabbitmqUser < Chef::Provider
   def action_create
     create_user
     set_permissions
+    set_tags
   end
 
   private
@@ -24,8 +25,15 @@ class Chef::Provider::RabbitmqUser < Chef::Provider
   def set_permissions
     return if user.permissions_set?
 
-    Chef::Log.info "Adding RabbitMQ user '#{user.name}'."
+    Chef::Log.info "Adding RabbitMQ user permissions '#{user.name}', #{user.command_line_permissions}, vhost=#{user.vhost}"
     RabbitMQ.ctl %Q{set_permissions -p #{user.vhost} "#{user.name}" #{user.command_line_permissions}}
+  end
+
+  def set_tags
+    return if user.tags.empty?
+
+    Chef::Log.info "Setting user tags '#{user.name}'."
+    RabbitMQ.ctl %Q{set_user_tags #{user.name} #{user.tags.join(' ')}}
   end
 
   def user
