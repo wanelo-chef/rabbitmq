@@ -4,6 +4,6 @@
 ).each do |plugin|
   rabbitmq_plugin plugin do
     action :enable
-    notifies :restart, "service[rabbitmq]"
+    notifies :restart, "service[rabbitmq]", :immediately
   end
 end
